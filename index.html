@@ -12,7 +12,6 @@
       --accent: #e53935;
       --text-primary: #ffffff;
       --text-muted: #999;
-      --border: #333;
       --link: #ffcccb;
       --shadow: rgba(0, 0, 0, 0.6);
     }
@@ -32,7 +31,7 @@
       padding: 24px 16px;
       background-color: var(--card-bg);
       text-align: center;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--text-muted);
       box-shadow: 0 4px 10px var(--shadow);
     }
 
@@ -62,11 +61,6 @@
       padding-top: 56.25%;
       position: relative;
       box-shadow: 0 4px 15px var(--shadow);
-      transition: transform 0.3s ease;
-    }
-
-    .stream-container:hover {
-      transform: scale(1.01);
     }
 
     iframe {
@@ -75,13 +69,14 @@
       left: 0;
       width: 100%;
       height: 100%;
+      pointer-events: none; /* Prevent manual pause */
     }
 
     .controls {
       position: absolute;
       bottom: 10px;
       right: 10px;
-      z-index: 10;
+      z-index: 2;
     }
 
     .controls button {
@@ -237,7 +232,15 @@
           controls: 0,
           rel: 0,
           modestbranding: 1,
-          enablejsapi: 1
+          enablejsapi: 1,
+          playsinline: 1
+        },
+        events: {
+          onStateChange: event => {
+            if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
+              event.target.playVideo();
+            }
+          }
         }
       });
     });
@@ -252,7 +255,6 @@
     }
   }
 
-  // News Feed Logic
   const feed = document.getElementById("news-feed");
   const form = document.getElementById("newsForm");
   const input = document.getElementById("newsInput");
@@ -283,22 +285,27 @@
   }, 15000);
 
   function addNews(text, url) {
+    if (feed.children.length >= 10) {
+      feed.removeChild(feed.lastElementChild); // FIFO - Remove the last element
+    }
+
     const newsDiv = document.createElement("div");
     newsDiv.className = "news-item";
     const now = new Date();
     const timestamp = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
     newsDiv.innerHTML = `
       <div>${text}</div>
       ${url ? `<a href="${url}" target="_blank">🔗 Source</a>` : ''}
       <time>🕒 ${timestamp}</time>
     `;
+
     feed.appendChild(newsDiv);
     newsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    createGrid();
-  });
+  createGrid();
 </script>
+
 </body>
 </html>
