@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>India-Pakistan War Live Dashboard</title>
+  <title>India-Pakistan War Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #121212;
-      --card-bg: #1e1e1e;
-      --accent: #e53935;
-      --text-primary: #ffffff;
-      --text-muted: #999;
-      --link: #ffcccb;
-      --shadow: rgba(0, 0, 0, 0.6);
+      --bg: #0e0e0e;
+      --card-bg: #1a1a1a;
+      --accent: #d32f2f;
+      --text-primary: #f0f0f0;
+      --text-muted: #888;
+      --link: #ffa7a7;
+      --shadow: rgba(0, 0, 0, 0.7);
     }
 
     * {
@@ -28,7 +28,7 @@
     }
 
     header {
-      padding: 24px 16px;
+      padding: 40px 16px 24px;
       background-color: var(--card-bg);
       text-align: center;
       border-bottom: 1px solid var(--text-muted);
@@ -36,31 +36,31 @@
     }
 
     header h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin: 0;
       color: var(--accent);
     }
 
     header p {
-      margin-top: 6px;
-      font-size: 1rem;
+      margin-top: 8px;
+      font-size: 1.1rem;
       color: var(--text-muted);
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 16px;
-      padding: 16px;
+      gap: 24px;
+      padding: 24px;
     }
 
     .stream-container {
       background: var(--card-bg);
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
       padding-top: 56.25%;
       position: relative;
-      box-shadow: 0 4px 15px var(--shadow);
+      box-shadow: 0 4px 20px var(--shadow);
     }
 
     iframe {
@@ -69,13 +69,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none; /* Prevent manual pause */
+      pointer-events: none;
     }
 
     .controls {
       position: absolute;
-      bottom: 10px;
-      right: 10px;
+      bottom: 12px;
+      right: 12px;
       z-index: 2;
     }
 
@@ -83,7 +83,7 @@
       padding: 6px 12px;
       font-size: 14px;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.1);
       border: none;
       color: white;
       border-radius: 6px;
@@ -92,83 +92,14 @@
     }
 
     .controls button:hover {
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    main {
-      padding: 0 16px;
-    }
-
-    .news-feed {
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column-reverse;
-    }
-
-    .news-item {
-      background-color: var(--card-bg);
-      padding: 16px;
-      margin-bottom: 16px;
-      border-left: 4px solid var(--accent);
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(255, 0, 0, 0.15);
-      animation: fadeIn 0.4s ease-in-out;
-    }
-
-    .news-item a {
-      color: var(--link);
-      text-decoration: underline;
-      display: inline-block;
-      margin-top: 6px;
-      font-size: 0.9rem;
-    }
-
-    .news-item time {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 5px;
+      background: rgba(255, 255, 255, 0.3);
     }
 
     footer {
-      margin: 40px 0 30px;
-      padding: 0 16px;
-    }
-
-    #newsForm {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    #newsInput,
-    #newsURL {
-      padding: 12px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 6px;
-      background: #2a2a2a;
-      color: white;
-    }
-
-    button[type="submit"] {
-      background-color: var(--accent);
-      color: white;
-      border: none;
-      padding: 12px;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button[type="submit"]:hover {
-      background-color: #c62828;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
+      text-align: center;
+      padding: 40px 16px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
     }
   </style>
 </head>
@@ -176,33 +107,24 @@
 
 <header>
   <h1>⚡ India-Pakistan War Dashboard</h1>
-  <p>Live News Updates & Stream Viewer</p>
+  <p>Multi-Stream Viewer</p>
 </header>
 
 <div class="grid" id="playerGrid"></div>
 
-<main>
-  <div id="news-feed" class="news-feed"></div>
-</main>
-
 <footer>
-  <form id="newsForm">
-    <input type="text" id="newsInput" placeholder="Breaking news headline..." required />
-    <input type="url" id="newsURL" placeholder="News source URL (optional)" />
-    <button type="submit">Add Update</button>
-  </form>
+  Built for awareness. All sources embedded via public YouTube streams.
 </footer>
 
-<!-- YouTube API -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
   const streams = [
-    { id: 'player1', url: '-Ubylyv6mLM' },
+    { id: 'player1', url: 'N3RT7rt5PXE' },
     { id: 'player2', url: 'uh0T6WKSWl0' },
     { id: 'player3', url: 'MR27upZpzpQ' },
-    { id: 'player4', url: '7BL1p2R_Lq0' },
-    { id: 'player5', url: 'n3ttOv97trk' },
-    { id: 'player6', url: 'RUzgphgBRzI' }
+    { id: 'player4', url: 'gCNeDWCI0vo' },
+    { id: 'player5', url: 'BQizxEvggqQ' },
+    { id: 'player6', url: 'm38Y1R6yXE0' }
   ];
 
   const players = {};
@@ -253,55 +175,6 @@
     } else if (player) {
       player.mute();
     }
-  }
-
-  const feed = document.getElementById("news-feed");
-  const form = document.getElementById("newsForm");
-  const input = document.getElementById("newsInput");
-  const urlInput = document.getElementById("newsURL");
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const text = input.value.trim();
-    const link = urlInput.value.trim();
-    if (text) {
-      addNews(text, link);
-      input.value = "";
-      urlInput.value = "";
-    }
-  });
-
-  const sampleNews = [
-    { text: "🇮🇳 Indian Air Force jets spotted near the border.", url: "https://www.hindustantimes.com/india-news" },
-    { text: "🇵🇰 Pakistan military confirms troop mobilization.", url: "https://www.dawn.com/latest-news" },
-    { text: "⚠️ Ceasefire violation reported in Poonch sector.", url: "https://www.ndtv.com/india-news" },
-    { text: "📡 Internet services disrupted in border areas.", url: "https://www.geo.tv" },
-    { text: "🕊️ UN urges both nations to de-escalate tensions.", url: "https://www.aljazeera.com/news" }
-  ];
-
-  setInterval(() => {
-    const randomNews = sampleNews[Math.floor(Math.random() * sampleNews.length)];
-    addNews(randomNews.text, randomNews.url);
-  }, 15000);
-
-  function addNews(text, url) {
-    if (feed.children.length >= 10) {
-      feed.removeChild(feed.lastElementChild); // FIFO - Remove the last element
-    }
-
-    const newsDiv = document.createElement("div");
-    newsDiv.className = "news-item";
-    const now = new Date();
-    const timestamp = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    newsDiv.innerHTML = `
-      <div>${text}</div>
-      ${url ? `<a href="${url}" target="_blank">🔗 Source</a>` : ''}
-      <time>🕒 ${timestamp}</time>
-    `;
-
-    feed.appendChild(newsDiv);
-    newsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   createGrid();
